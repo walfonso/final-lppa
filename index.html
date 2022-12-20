@@ -1,17 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Final de LPPA 2022 UAI Rosario" />
-    <meta name="author" content="Walter Alfonso" />
-    <title>Mi juego de Damas</title>
-    <link rel="stylesheet" type="text/css" href="css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-  </head>
-  <body>
-    <!-- Scripts JS para carga inicial -->
-    <script type="text/javascript" src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Final de LPPA 2022 UAI Rosario" />
+  <meta name="author" content="Walter Alfonso" />
+  <title>Mi juego de Damas</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+   <!-- carga inicial de funciones desde el archivo juego.js -->
+   <script type="text/javascript" src="juego.js">
+   </script>
+</head>
+
+<body>
+  <header>
+    <input type="checkbox" id="btn-menu">
+    <label for="btn-menu">
+      <img src="./images/menu.png" alt="Boton de Menu">
+    </label>
+    <nav class="menu">
+      <ul>
+        <li><a href="#">MINI-DAMAS</a></li>
+        <li><a href="reglamento.html">Reglamento</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="#" onclick="">Ver Partidas Ganadas</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <section id="tablero">
+    <div class="row">
+      <aside id="menu-tablero">
+        <div class="puntajes">
+          <h3 style="width: 100%;">Fichas #1 </h3>
+           <p id="nombreJugador1">Jugador 1</p>
+         
+          <input type="text" id="puntos1" class="jugador-puntaje" value="0" ReadOnly>
+        </div>
+
+      </aside>      
+      <div id="juego-damas">
+        <h2 class="titulo">Mini-Damas</h2>
+
+        <table id="tablero-marco">
+
+        </table>
+      </div>
+      
+           
+      
+      <aside id="menu-tablero">
+   
+        <div class="puntajes">
+          <h3>Fichas #2: <p id="nombreJugador2">Jugador 2</p>
+          </h3>
+          <input type="text" id="puntos2" class="jugador-puntaje" value="0" ReadOnly>
+        </div>
+
+
+      </aside>
+    </div>
+  </section>
+  <section>      <h3 id="turno-jugador"> </h3>
+
+    <div class="menu-link">
+      <div class="botonera">      <input type="button" id="boton-nueva-partida" class="partidasGuardadas" value="Nueva Partida" onclick="cargarNuevaPartida();">
+      <input type="button" id="boton-guardar-partida" class="partidasGuardadas" value="Guardar Partida" onclick="">
+      <input type="button" id="boton-recuperar-partida-guardada" class="partidasGuardadas"
+        value="Recuperar Partida Guardada" onclick="">
+        </div>
+
+      </div>
+
+
+</div>
+
+  </section>
+
+  <footer id="main-footer">
+    <div id="datos-footer" class="container">
+      <div id="linkGithub">
+        <a href="https://github.com/walfonso/final-lppa.git" target="_blank">Repositorio del proyecto en GitHub </a>
+      </div>
+      <div>
+        <p>Desarrollado por Walter Alfonso || 2021-2022</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- archivo de scripts JS para la carga inicial -->
+  <script type="text/javascript" src="app.js"></script>
+  <script>
+    dibujarTablero();
+  </script>
+</body>
 </html>
