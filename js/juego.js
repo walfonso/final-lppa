@@ -141,6 +141,58 @@ function cargarTableroNuevo() {
   );
 }
 
+//Función verificar casilla válida para movimiento
+function casillaValidaMovimiento(colorFichas, posicionAnterior, posicionNueva) {
+  //creo variables de comparacion de posicion fila y columna
+  var filaAnterior = parseInt(posicionAnterior.substring(0, 1));
+  var columnaAnterior = parseInt(posicionAnterior.substring(2));
+  var filaNueva = parseInt(posicionNueva.substring(0, 1));
+  var columnaNueva = parseInt(posicionNueva.substring(2));
+
+  //Salidas de control
+  console.log("Color fichas: " + colorFichas);
+  console.log("Posicion anterior: " + posicionAnterior);
+  console.log("Posicion nueva: " + posicionNueva);
+  console.log("----------------------------------------------");
+  console.log("Fila anterior: " + filaAnterior);
+  console.log("Columna anterior: " + columnaAnterior);
+  console.log("Fila nueva: " + filaNueva);
+  console.log("Columna nueva: " + columnaNueva);
+
+  //Verificar el color de ficha y cual debe mover
+  if (colorFichas == "blancas") {
+    console.log("mueven las blancas");
+    //Ver si se esta moviendo en diagonal 1 o 2 lugares
+    if (
+      filaAnterior < 8 &&
+      filaNueva == filaAnterior + 1 &&
+      Math.abs(columnaAnterior - columnaNueva) == 1
+    ) {
+      return true;
+    } else if (
+      filaAnterior < 7 &&
+      filaNueva == filaAnterior + 2 &&
+      Math.abs(columnaAnterior - columnaNueva) == 2
+    ) {
+      var posicionPosibleFicha =
+        filaAnterior +
+        1 +
+        "-" +
+        (columnaAnterior + (columnaNueva - columnaAnterior) / 2);
+      console.log(posicionPosibleFicha);
+
+      var casillaVerificar = document.getElementById(posicionPosibleFicha);
+
+      if (casillaVerificar.classList.contains("ficha-negra")) {
+        casillaVerificar.classList.remove("ficha-negra");
+        document.getElementById("puntos2").value -= 1;
+        return true;
+      }
+    }
+  }
+}
+//
+
 //Funciòn para enviar datos del formulario de consulta
 function enviarDatosContacto() {
   var cNombre = document.getElementById("nombre");
