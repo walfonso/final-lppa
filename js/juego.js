@@ -490,6 +490,86 @@ function recuperarPartida() {
   }
 }
 
+//Función Casilla valida posible
+function casillaValidaPosible(colorFichas, posicionAnterior, posicionNueva) {
+  //creo variables de comparacion de posicion fila y columna
+  var filaAnterior = parseInt(posicionAnterior.substring(0, 1));
+  var columnaAnterior = parseInt(posicionAnterior.substring(2));
+  var filaNueva = parseInt(posicionNueva.substring(0, 1));
+  var columnaNueva = parseInt(posicionNueva.substring(2));
+  var casillaValidar = document.getElementById(posicionNueva);
+  //verifico que la casilla a validar este vacia
+  if (
+    casillaValidar.classList.contains("ficha-blanca") ||
+    casillaValidar.classList.contains("ficha-negra")
+  ) {
+    return false;
+  } else {
+    //verifico segun el color de ficha que toca mover
+    if (colorFichas == "blancas") {
+      if (
+        filaAnterior < 8 &&
+        filaNueva == filaAnterior + 1 &&
+        Math.abs(columnaAnterior - columnaNueva) == 1
+      ) {
+        return true;
+      } else if (
+        filaAnterior < 7 &&
+        filaNueva == filaAnterior + 2 &&
+        Math.abs(columnaAnterior - columnaNueva) == 2
+      ) {
+        var posicionPosibleFicha =
+          filaAnterior +
+          1 +
+          "-" +
+          (columnaAnterior + (columnaNueva - columnaAnterior) / 2);
+        console.log(posicionPosibleFicha);
+        //identifico la casilla intermedia
+        var casillaVerificar = document.getElementById(posicionPosibleFicha);
+        //si en la casilla intermedia hay una ficha negra, hay posibilidad de movimiento de la ficha blanca
+        if (casillaVerificar.classList.contains("ficha-negra")) {
+          return true;
+        }
+      }
+    } else if (colorFichas == "negras") {
+      if (
+        filaAnterior > 0 &&
+        filaNueva == filaAnterior - 1 &&
+        Math.abs(columnaAnterior - columnaNueva) == 1
+      ) {
+        //la casilla, si esta en la columna 1 o la 8, solo tendra posible una casilla de avance
+        if (columnaAnterior > 1) {
+          console.log(
+            "se mueve desde la columna mayor a 1, hay celda libre avance columna anterior"
+          );
+        } else if (columnaAnterior < 8) {
+          console.log(
+            "se mueve desde la columna menor a 8, hay celda libre avance columna siguiente"
+          );
+        }
+        return true;
+      } else if (
+        filaAnterior > 1 &&
+        filaNueva == filaAnterior - 2 &&
+        Math.abs(columnaAnterior - columnaNueva) == 2
+      ) {
+        var posicionPosibleFicha =
+          filaAnterior -
+          1 +
+          "-" +
+          (columnaAnterior + (columnaNueva - columnaAnterior) / 2);
+        console.log(posicionPosibleFicha);
+        //identifico la casilla intermedia
+        var casillaVerificar = document.getElementById(posicionPosibleFicha);
+        //si en la casilla intermedia hay una ficha blanca, hay posibilidad de movimiento de la ficha negra
+        if (casillaVerificar.classList.contains("ficha-blanca")) {
+          return true;
+        }
+      }
+    }
+  }
+}
+
 //Funcion para verificar si solo quedan fichas de un color y resulta ganador
 function hayGanador() {
   var cantidadBlancas = 0;
@@ -646,4 +726,104 @@ function movimientosPosiblesB() {
     "cantidad de movimientos posibles fichas blancas: " +
       hayMovimientosPosiblesB
   );
+}
+
+//Función guarda la partida se almacena como array multidimensional
+function guardarPartidaGanada(jugadorGana) {
+  if (localStorage.getItem("partidasGanadas")) {
+    arraypartidasGanadas = JSON.parse(localStorage.getItem("partidasGanadas"));
+  } else {
+    arraypartidasGanadas = [];
+  }
+  console.log(arraypartidasGanadas);
+  var meses = new Array(
+    "Ene",
+    "Feb",
+    "Mar",
+    "Abr",
+    "May",
+    "Jun",
+    "Jul",
+    "Ago",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dic"
+  );
+
+  var f = new Date();
+  fecha = f.getDate() + " / " + meses[f.getMonth()] + " / " + f.getFullYear();
+  console.log("fecha actual: " + fecha);
+  partidaGanada = [
+    fecha,
+    document.getElementById("nombreJugador1").textContent,
+    document.getElementById("nombreJugador2").textContent,
+    document.getElementById("puntos1").value,
+    document.getElementById("puntos2").value,
+    jugadorGana,
+  ];
+
+  console.log(partidaGanada);
+  console.log(arraypartidasGanadas);
+  arraypartidasGanadas.push({ partidaGanada });
+  var arraypartidasGanadasString = JSON.stringify(arraypartidasGanadas);
+  console.log(
+    "Array partidaActual convertido a string para almacenar partida: " +
+      arraypartidasGanadasString
+  );
+
+  localStorage.setItem("partidasGanadas", arraypartidasGanadasString);
+}
+
+//Función que crea el listado para mostrar las partidas ganadas
+function mostrarListado() {
+  if (localStorage.getItem("partidasGanadas")) {
+    arraypartidasGanadas = JSON.parse(localStorage.getItem("partidasGanadas"));
+  } else {
+    arraypartidasGanadas = [];
+  }
+  console.log(arraypartidasGanadas);
+  var marcoListado = document.getElementById("mostrarListado");
+  arraypartidasGanadas.forEach(function (elemento) {
+    console.log(elemento.partidaGanada.toString());
+    var lineaTexto = document.createElement("p");
+    lineaTexto.classList.add("lineaTextoListado");
+    mostrarLinea.apply(null, elemento.partidaGanada);
+    lineaTexto.textContent = texto;
+    marcoListado.appendChild(lineaTexto);
+  });
+}
+
+//Función que muestra la linea de texto con los datos de la partida ganada
+function mostrarLinea(fecha, jugador1, jugador2, puntos1, puntos2, ganador) {
+  console.log(fecha, jugador1, jugador2, puntos1, puntos2, ganador);
+
+  if (puntos1 > puntos2) {
+    texto =
+      fecha +
+      ":  " +
+      jugador1 +
+      " " +
+      puntos1 +
+      " vs " +
+      jugador2 +
+      " " +
+      puntos2 +
+      "  GANÓ " +
+      jugador1;
+  } else {
+    texto =
+      fecha +
+      ":  " +
+      jugador1 +
+      " " +
+      puntos1 +
+      " vs " +
+      jugador2 +
+      " " +
+      puntos2 +
+      "  GANÓ " +
+      jugador2;
+  }
+  console.log(texto);
 }

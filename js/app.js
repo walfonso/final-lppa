@@ -117,7 +117,7 @@ var seleccionarCasilla = (e) => {
             "Mueve el jugador: " + turnoJugador;
 
           //Verificar si hay ganador luego del movimiento
-          HayGanador();
+          hayGanador();
         } else if (
           casillaDesmarca.classList.contains("ficha-negra") &&
           turnoJugador == 2 &&
@@ -132,7 +132,7 @@ var seleccionarCasilla = (e) => {
           turnoJugador = 1;
           document.getElementById("turno-jugador").textContent =
             "Mueve el jugador: " + turnoJugador;
-          HayGanador();
+          hayGanador();
         }
       }
     }
