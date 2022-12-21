@@ -274,3 +274,16 @@ aside#menu-tablero {
   margin-top: 5px;
   margin-bottom: 10px;
 }
+
+/*Reglamento*/
+/* Página de reglas */
+#reglas {
+  width: 80%;
+  padding: 20px;
+  margin: auto;
+  color: #fff;
+  font-weight: bold;
+}
+
+#texto-reglas {
+}
