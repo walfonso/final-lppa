@@ -490,6 +490,97 @@ function recuperarPartida() {
   }
 }
 
+//Funcion para verificar si solo quedan fichas de un color y resulta ganador
+function hayGanador() {
+  var cantidadBlancas = 0;
+  var cantidadNegras = 0;
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      var nombreCelda = i + "-" + j;
+      var celda = document.getElementById(nombreCelda);
+      if (celda.classList.contains("ficha-blanca")) {
+        ArrayInicial[i][j] = 1;
+        cantidadBlancas += 1;
+      } else if (celda.classList.contains("ficha-negra")) {
+        ArrayInicial[i][j] = 2;
+        cantidadNegras += 1;
+      } else {
+        ArrayInicial[i][j] = 0;
+      }
+    }
+  }
+
+  console.log("Cantidad de fichas blancas: " + cantidadBlancas);
+  console.log("Cantidad de fichas negras: " + cantidadNegras);
+
+  if (cantidadBlancas == 0) {
+    //hay GANADOR, Fichas Negras, jugador 2
+
+    mensaje = "Felicitaciones, ha ganado el JUGADOR 2 con las fichas negras!!!";
+    //console.log(mensaje);
+    window.alert(mensaje);
+    //actualizo el panel de turno
+    document.getElementById("turno-jugador").textContent =
+      "GANO el JUGADOR 1!!!";
+    guardarPartidaGanada(1);
+    juegoFinalizado = 1;
+  } else if (cantidadNegras == 0) {
+    //hay GANADOR, Fichas blancas, jugador 1
+    mensaje = "Felicitaciones, ha ganado el JUGADOR 1 con las fichas negras!!!";
+    //console.log(mensaje);
+    window.alert(mensaje);
+    //actualizo el panel de turno
+    document.getElementById("turno-jugador").textContent =
+      "GANO el JUGADOR 2!!!";
+    guardarPartidaGanada(2);
+    juegoFinalizado = 1;
+  } else {
+    //console.log('Según cantidad de posibilidad de movimientos de las fichas');
+    //Ver si hay posibilidad de movimientos
+    movimientosPosiblesB();
+    movimientosPosiblesN();
+    //console.log('movimientos posibles para fichas blancas: ' + hayMovimientosPosiblesB);
+    //console.log('movimientos posibles para fichas negras: ' + hayMovimientosPosiblesN);
+
+    //La partida termina en empate cuando las piezas no tienen posibilidad de mas movimientos.
+    //si el siguiente en mover son las blancas y no le quedan movimientos
+    //y no quedan posibilidad de mover negras, entonces es empate.
+    if (turnoJugador == 1 && hayMovimientosPosiblesB == 0) {
+      if (hayMovimientosPosiblesN == 0) {
+        mensaje = "EMPATE!!!";
+        console.log(mensaje);
+        window.alert(mensaje);
+      }
+      //sino, ganan las negras, jugador 2
+      else {
+        mensaje =
+          "FELICITACIONES, ha ganado el Jugador 2 con las fichas negras!!!";
+        console.log(mensaje);
+        window.alert(mensaje);
+        guardarPartidaGanada(2);
+      }
+      juegoFinalizado = 1;
+    }
+    //Si mueven las fichas negras y no quedan posibilidad de mover blancas
+    else if (turnoJugador == 2 && hayMovimientosPosiblesN == 0) {
+      if (hayMovimientosPosiblesB == 0) {
+        mensaje = "EMPATE!!!";
+        console.log(mensaje);
+        window.alert(mensaje);
+      }
+      //sino, ganan las negras, jugador 2
+      else {
+        mensaje =
+          "FELICITACIONES, ha ganado el Jugador 1 con las fichas blancas!!!";
+        console.log(mensaje);
+        window.alert(mensaje);
+        guardarPartidaGanada(1);
+      }
+      juegoFinalizado = 1;
+    }
+  }
+}
+
 //Función que evalua los movimientos posibles fichas negras
 function movimientosPosiblesN() {
   //console.log('Movimiento de las negras');
