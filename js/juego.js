@@ -489,3 +489,70 @@ function recuperarPartida() {
     }
   }
 }
+
+//Función que evalua los movimientos posibles fichas negras
+function movimientosPosiblesN() {
+  //console.log('Movimiento de las negras');
+  var colorFichasMueven = "negras";
+  hayMovimientosPosiblesN = 0;
+  for (var i = 7; i > 0; i--) {
+    for (var j = 0; j < 8; j++) {
+      var nombreCelda = i + "-" + j;
+      var celda = document.getElementById(nombreCelda);
+      if (celda.classList.contains("ficha-negra")) {
+        for (var k = i - 1; k > 0; k--) {
+          for (var n = 0; n < 8; n++) {
+            var celdaEvaluada = k + "-" + n;
+            if (
+              casillaValidaPosible(
+                colorFichasMueven,
+                nombreCelda,
+                celdaEvaluada
+              )
+            ) {
+              hayMovimientosPosiblesN += 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  console.log(
+    "cantidad de movimientos posibles fichas negras: " + hayMovimientosPosiblesN
+  );
+}
+
+//Función que evalua los movimientos posibles fichas blancas
+function movimientosPosiblesB() {
+  //console.log('evaluo posibilidad movimiento de las blancas');
+  var colorFichasMueven = "blancas";
+  hayMovimientosPosiblesB = 0;
+  for (var i = 0; i < 7; i++) {
+    for (var j = 0; j < 8; j++) {
+      var nombreCelda = i + "-" + j;
+      var celda = document.getElementById(nombreCelda);
+      if (celda.classList.contains("ficha-blanca")) {
+        for (var k = i + 1; k < 8; k++) {
+          for (var n = 0; n < 8; n++) {
+            var celdaEvaluada = k + "-" + n;
+            if (
+              casillaValidaPosible(
+                colorFichasMueven,
+                nombreCelda,
+                celdaEvaluada
+              )
+            ) {
+              hayMovimientosPosiblesB += 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  console.log(
+    "cantidad de movimientos posibles fichas blancas: " +
+      hayMovimientosPosiblesB
+  );
+}
