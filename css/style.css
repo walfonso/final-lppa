@@ -127,3 +127,82 @@ header label:hover {
 .casilla-seleccionada {
   border: 3px solid greenyellow;
 }
+
+/*Area Jugadores*/
+aside#menu-tablero {
+  width: 30%;
+  background-color: #333333;
+  padding: 15px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 5px solid #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 150px;
+}
+
+#menu-tablero h2 {
+  font-size: 30px;
+  color: orange;
+  text-align: center;
+}
+
+.puntajes {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.puntajes h3 {
+  color: #fff;
+  font-style: italic;
+  margin-right: 10px;
+  text-align: center;
+  flex-direction: row;
+}
+
+.jugador-puntaje {
+  font-size: 30px;
+  color: #000;
+  font-style: italic;
+  margin-right: 10px;
+  text-align: center;
+  width: 100px;
+  background-color: #ccc;
+  border: 4px solid #fff;
+}
+
+#nombreJugador1,
+#nombreJugador2 {
+  color: #fff;
+  font-weight: bolder;
+  text-align: left;
+}
+
+#turno-jugador {
+  font-size: 25px;
+  font-weight: 600;
+  margin-top: 10px;
+  text-align: center;
+}
+
+#boton-nueva-partida1 {
+  height: 35px;
+  width: 90%;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #af9503;
+  border: 0;
+  border-radius: 5px;
+  border-right: 7px solid blue;
+  border-bottom: 7px solid blue;
+  margin-top: 25px;
+  margin-bottom: 35px;
+}
+
+#boton-nueva-partida:hover {
+  background-color: #af9503;
+}
