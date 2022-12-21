@@ -310,3 +310,182 @@ function enviarDatosContacto() {
     );
   }
 }
+
+//Guardar partida actual  SESSIONSTORAGE  mantiene sesion activa
+function guardarSesionActual() {
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      var nombreCelda = i + "-" + j;
+      var celda = document.getElementById(nombreCelda);
+      if (celda.classList.contains("ficha-blanca")) {
+        ArrayInicial[i][j] = 1;
+      } else if (celda.classList.contains("ficha-negra")) {
+        ArrayInicial[i][j] = 2;
+      } else {
+        ArrayInicial[i][j] = 0;
+      }
+    }
+  }
+  console.log(ArrayInicial);
+
+  //Armar array con los datos de la partida actual
+  partidaActual = [
+    document.getElementById("nombreJugador1").textContent,
+    document.getElementById("nombreJugador2").textContent,
+    document.getElementById("puntos1").value,
+    document.getElementById("puntos2").value,
+    ArrayInicial,
+    turnoJugador,
+    juegoFinalizado,
+    mensaje,
+  ];
+
+  //Convertir Array a String
+  var partidaActualString = JSON.stringify(partidaActual);
+  console.log(
+    "Array partidaActual convertido a string: " + partidaActualString
+  );
+
+  //Guardar datos de la partida en el Local storage
+  sessionStorage.setItem("PartidaActual", partidaActualString);
+}
+
+//Función que recarga los datos de juego de la sesión actual del juego al refrescar la pagina
+function recargarSesionActual() {
+  if (cargaInicial == 0) {
+    PartidaActual = JSON.parse(sessionStorage.getItem("PartidaActual"));
+    console.log(PartidaActual);
+    var nomJugador1 = PartidaActual[0];
+    var nomJugador2 = PartidaActual[1];
+    var puntosJugador1 = PartidaActual[2];
+    var puntosJugador2 = PartidaActual[3];
+    ArrayInicial = PartidaActual[4];
+    turnoJugador = PartidaActual[5];
+    juegoFinalizado = PartidaActual[6];
+    mensaje = PartidaActual[7];
+
+    //Dibujar el tablero en funcion del array de juego de partida
+    dibujarFichas(
+      ArrayInicial,
+      nomJugador1,
+      nomJugador2,
+      puntosJugador1,
+      puntosJugador2,
+      turnoJugador
+    );
+    cargaInicial = 1;
+  } else {
+    if (window.confirm("Borrará la partida actual. Desea continuar?")) {
+      //Recuperar el array con los datos almacenado en el sessionStorage
+      PartidaActual = JSON.parse(sessionStorage.getItem("PartidaActual"));
+      console.log(PartidaActual);
+      var nomJugador1 = PartidaActual[0];
+      var nomJugador2 = PartidaActual[1];
+      var puntosJugador1 = PartidaActual[2];
+      var puntosJugador2 = PartidaActual[3];
+      ArrayInicial = PartidaActual[4];
+      turnoJugador = PartidaActual[5];
+      juegoFinalizado = PartidaActual[6];
+      mensaje = PartidaActual[7];
+
+      //Dibujar el tablero en funcion del array de juego de partida
+      dibujarFichas(
+        ArrayInicial,
+        nomJugador1,
+        nomJugador2,
+        puntosJugador1,
+        puntosJugador2,
+        turnoJugador
+      );
+    }
+  }
+}
+
+// Funcion guardar partida
+function guardarPartida() {
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      var nombreCelda = i + "-" + j;
+      var celda = document.getElementById(nombreCelda);
+      if (celda.classList.contains("ficha-blanca")) {
+        ArrayInicial[i][j] = 1;
+      } else if (celda.classList.contains("ficha-negra")) {
+        ArrayInicial[i][j] = 2;
+      } else {
+        ArrayInicial[i][j] = 0;
+      }
+    }
+  }
+
+  //console.log(ArrayInicial);
+
+  //Array con los datos del juego actual
+  partidaGuardada = [
+    document.getElementById("nombreJugador1").textContent,
+    document.getElementById("nombreJugador2").textContent,
+    document.getElementById("puntos1").value,
+    document.getElementById("puntos2").value,
+    ArrayInicial,
+    turnoJugador,
+    juegoFinalizado,
+    mensaje,
+  ];
+
+  var partidaGuardadaString = JSON.stringify(partidaGuardada);
+  //console.log('Array partidaActual convertido a string: ' + partidaGuardadaString);
+  localStorage.setItem("partidaGuardada", partidaGuardadaString);
+}
+
+//Función recuperar datos de una partida
+function recuperarPartida() {
+  if (cargaInicial == 0) {
+    partidaGuardada = JSON.parse(localStorage.getItem("partidaGuardada"));
+    //console.log(partidaGuardada);
+    var nomJugador1 = partidaGuardada[0];
+    var nomJugador2 = partidaGuardada[1];
+    var puntosJugador1 = partidaGuardada[2];
+    var puntosJugador2 = partidaGuardada[3];
+    ArrayInicial = partidaGuardada[4];
+    turnoJugador = partidaGuardada[5];
+    juegoFinalizado = partidaGuardada[6];
+    mensaje = partidaGuardada[7];
+
+    dibujarFichas(
+      ArrayInicial,
+      nomJugador1,
+      nomJugador2,
+      puntosJugador1,
+      puntosJugador2,
+      turnoJugador
+    );
+    window.alert("La partida se ha cargado correctamente");
+    cargaInicial = 1;
+  } else {
+    if (
+      window.confirm(
+        "Esta operación borrará la partida actual. Desea continuar?"
+      )
+    ) {
+      partidaGuardada = JSON.parse(localStorage.getItem("partidaGuardada"));
+      console.log(partidaGuardada);
+      var nomJugador1 = partidaGuardada[0];
+      var nomJugador2 = partidaGuardada[1];
+      var puntosJugador1 = partidaGuardada[2];
+      var puntosJugador2 = partidaGuardada[3];
+      ArrayInicial = partidaGuardada[4];
+      turnoJugador = partidaGuardada[5];
+      juegoFinalizado = partidaGuardada[6];
+      mensaje = partidaGuardada[7];
+
+      dibujarFichas(
+        ArrayInicial,
+        nomJugador1,
+        nomJugador2,
+        puntosJugador1,
+        puntosJugador2,
+        turnoJugador
+      );
+      window.alert("La partida se ha cargado correctamente");
+    }
+  }
+}
