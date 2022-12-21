@@ -140,3 +140,57 @@ function cargarTableroNuevo() {
     turnoJugador
   );
 }
+
+//Funciòn para enviar datos del formulario de consulta
+function enviarDatosContacto() {
+  var cNombre = document.getElementById("nombre");
+  var cMail = document.getElementById("mail");
+  var cConsulta = document.getElementById("consulta");
+
+  console.log("el nombre de coontacto es: " + cNombre.value);
+  console.log("el mail de coontacto es: " + cMail.value);
+  console.log("la consulta es: " + cConsulta.value);
+
+  var contactoNombre = cNombre.value;
+  var contactoMail = cMail.value;
+  var contactoConsulta = cConsulta.value;
+
+  var datosEnviar = {
+    contactoNombre,
+    contactoMail,
+    contactoConsulta,
+  };
+  var servidor = "https://jsonplaceholder.typicode.com/posts";
+
+  //Verifición que el texto de nombre y apellido ingresado tenga al menos 5 caracteres
+  if (contactoNombre.length >= 5) {
+    //verifico que la direccion de mail tenga una estructura valida
+    if (
+      contactoMail.indexOf("@") > 0 &&
+      contactoMail.length >= 9 &&
+      contactoMail.lastIndexOf(".") - contactoMail.indexOf("@") > 3
+    ) {
+      //verifico que el campo de la consulta no este vacio
+      if (contactoConsulta.length >= 5) {
+        //ejecuto el envio de datos por medio del programa/herramienta de envío de emails predeterminada del sistema operativo.
+        var urlMail =
+          "mailto:" +
+          contactoMail +
+          "?subject=Contacto de " +
+          contactoNombre +
+          " a traves de la pagina de MINI-DAMAS&body=" +
+          contactoConsulta;
+        console.log(urlMail);
+        location.href = urlMail;
+      } else {
+        window.alert("Datos incompletos: Escriba la consulta a realizar");
+      }
+    } else {
+      window.alert("Datos incompletos: El correo electronico no es correcto");
+    }
+  } else {
+    window.alert(
+      "Datos incompletos: Escriba su Nombre y Apellido, minimo 5 caracteres"
+    );
+  }
+}
