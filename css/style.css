@@ -240,3 +240,37 @@ aside#menu-tablero {
 .partidasGanadas:hover {
   background-color: #fff;
 }
+
+/*Config Footer*/
+#main-footer {
+  background: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+#main-footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#main-footer a:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#main-footer abbr {
+  text-decoration: none;
+}
+
+#datos-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#linkGithub {
+  height: 30px;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
