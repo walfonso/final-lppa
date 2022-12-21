@@ -206,3 +206,37 @@ aside#menu-tablero {
 #boton-nueva-partida:hover {
   background-color: #af9503;
 }
+
+.partidasGuardadas {
+  height: 45px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #aaaaaa;
+  border-radius: 4px;
+  border: 4px solid #fff;
+  margin-top: 15px;
+}
+
+.partidasGuardadas:hover {
+  background-color: #af9503;
+}
+
+.partidasGanadas {
+  height: 35px;
+  width: 90%;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #ccc;
+  border: 0;
+  border-radius: 5px;
+  border-right: 7px solid rgb(62, 62, 77);
+  border-bottom: 7px solid rgb(62, 62, 77);
+  margin-top: 30px;
+}
+
+.partidasGanadas:hover {
+  background-color: #fff;
+}
