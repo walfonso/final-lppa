@@ -159,10 +159,10 @@ function casillaValidaMovimiento(colorFichas, posicionAnterior, posicionNueva) {
   console.log("Fila nueva: " + filaNueva);
   console.log("Columna nueva: " + columnaNueva);
 
-  //Verificar el color de ficha y cual debe mover
+  //Verificar según el color de ficha, que quien debe mover
   if (colorFichas == "blancas") {
     console.log("mueven las blancas");
-    //Ver si se esta moviendo en diagonal 1 o 2 lugares
+
     if (
       filaAnterior < 8 &&
       filaNueva == filaAnterior + 1 &&
@@ -181,17 +181,81 @@ function casillaValidaMovimiento(colorFichas, posicionAnterior, posicionNueva) {
         (columnaAnterior + (columnaNueva - columnaAnterior) / 2);
       console.log(posicionPosibleFicha);
 
+      //Identificar casilla intermedia
       var casillaVerificar = document.getElementById(posicionPosibleFicha);
 
+      //Casilla intermedia hay una ficha negra, se mueve la ficha blanca
       if (casillaVerificar.classList.contains("ficha-negra")) {
         casillaVerificar.classList.remove("ficha-negra");
         document.getElementById("puntos2").value -= 1;
         return true;
       }
     }
+  } else if (colorFichas == "negras") {
+    console.log("mueven las negras");
+
+    if (
+      filaAnterior > 0 &&
+      filaNueva == filaAnterior - 1 &&
+      Math.abs(columnaAnterior - columnaNueva) == 1
+    ) {
+      //La casilla, si esta en la columna 1 o la 8, solo tendra posible una casilla de avance
+      if (columnaAnterior > 1) {
+        console.log(
+          "Mueve desde la columna mayor a 1, hay celda libre avance columna anterior"
+        );
+      } else if (columnaAnterior < 8) {
+        console.log(
+          "Mueve desde la columna menor a 8, hay celda libre avance columna siguiente"
+        );
+      }
+      return true;
+    } else if (
+      filaAnterior > 1 &&
+      filaNueva == filaAnterior - 2 &&
+      Math.abs(columnaAnterior - columnaNueva) == 2
+    ) {
+      var posicionPosibleFicha =
+        filaAnterior -
+        1 +
+        "-" +
+        (columnaAnterior + (columnaNueva - columnaAnterior) / 2);
+      console.log(posicionPosibleFicha);
+      var casillaVerificar = document.getElementById(posicionPosibleFicha);
+      if (casillaVerificar.classList.contains("ficha-blanca")) {
+        casillaVerificar.classList.remove("ficha-blanca");
+        document.getElementById("puntos1").value -= 1;
+        return true;
+      }
+    }
   }
+
+  //Casilla no es valida, no se realiza el movimiento
+  return false;
 }
-//
+
+//Función para enviar datos a la API del servidor remoto
+function enviarDatosServidor(turnoJugador, posicionMarca) {
+  var datosEnviar = {
+    turnoJugador,
+    posicionMarca,
+  };
+  var servidor = "https://jsonplaceholder.typicode.com/posts";
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: JSON.stringify(datosEnviar),
+  })
+    .then((response) => response.json())
+    .then((json) =>
+      console.log(
+        "Datos enviados al servidor: Mueve el jugador: " +
+          turnoJugador +
+          " a la casilla: " +
+          posicionMarca
+      )
+    )
+    .catch((err) => console.log("Error al enviar al servidor: " + err));
+}
 
 //Funciòn para enviar datos del formulario de consulta
 function enviarDatosContacto() {
