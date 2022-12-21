@@ -21,7 +21,7 @@ body {
   margin: auto;
 }
 
-/*encabezado - menu*/
+/*Encabezado - Menu*/
 header {
   width: 100%;
   background: #af9503;
@@ -78,7 +78,6 @@ header label:hover {
 }
 
 /*Juego - tablero*/
-
 .titulo {
   text-align: center;
   font-size: 2em;
@@ -115,4 +114,16 @@ header label:hover {
   width: 60px;
   height: 60px;
   background-color: black;
+}
+
+.ficha-blanca {
+  background-image: url(../images/fichaGris.png);
+}
+
+.ficha-negra {
+  background-image: url(../images/fichaRojo.png);
+}
+
+.casilla-seleccionada {
+  border: 3px solid greenyellow;
 }
